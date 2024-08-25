@@ -7,21 +7,13 @@ import java.util.ArrayList;
 
 public class TableroFichas {
 	private Ficha[][] fichas;
-	private final static int TABLERO_FILAS = 3;
-	private final static int TABLERO_COLUMNAS = 3;
+	private final static int TABLERO_FILAS = 4;
+	private final static int TABLERO_COLUMNAS = 4;
 	private final static int VACIO = 0;
 
 	
 	public TableroFichas( ) {
 		this.fichas = new Ficha[TABLERO_FILAS][TABLERO_COLUMNAS];
-//		for(int fila = 0; fila < TABLERO_FILAS; fila++) {
-//			for(int col = 0; col < TABLERO_COLUMNAS; col++) {
-//				if(valorFicha < 15)
-//					this.fichas[fila][col] = new Ficha(++valorFicha);
-//				else
-//					this.fichas[fila][col] = new Ficha(VACIO);
-//			}
-//		}
 		inicializarFichasDesordenadas();
 	}
 	
@@ -84,7 +76,7 @@ public class TableroFichas {
 	
 	private void inicializarFichasDesordenadas() {
         List<Ficha> listaFichas = new ArrayList<>();
-        for (int valor = 1; valor <= 8; valor++) {
+        for (int valor = 1; valor <= 15; valor++) {
             listaFichas.add(new Ficha(valor));
         }
         Collections.shuffle(listaFichas); // con el método suffle desordenados la listaFichas!!!!
