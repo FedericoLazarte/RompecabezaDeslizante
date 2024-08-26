@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -19,6 +21,8 @@ public class Interfaz {
 	private TableroFichas tableroJuego;
 	private JPanel panelContenedorDeLasFichas;
 	private JFrame frame;
+	JLabel labelMovimientosTexto;
+	JButton boton;
 
 	/**
 	 * Launch the application.
@@ -73,22 +77,16 @@ public class Interfaz {
 		int anchuraTablero = tableroJuego.totalColumnas();
 		panelContenedorDeLasFichas.setLayout(new GridLayout(alturaTablero, anchuraTablero, 4, 4));
 		frame.getContentPane().add(panelContenedorDeLasFichas);
+		actualizarTablero();
 		
-		for(int fila = 0; fila < tableroJuego.totalFilas(); fila++) {
-			for(int col = 0; col < tableroJuego.totalColumnas(); col++) {
-				int valor = tableroJuego.dameFicha(fila, col).obtenerValorFicha();
-				JButton boton = new JButton(String.valueOf(valor));
-				
-				// Configurar el botón
-                boton.setFont(new Font("Arial", Font.PLAIN, 18));
-                boton.setFocusPainted(false);
-                boton.setBorderPainted(true);
-                panelContenedorDeLasFichas.add(boton);
-                agregarAccionBoton(boton, fila, col);
-    	        	
-			}
-			
-		}
+		// ------------------------- Labels -----------------------------------
+		
+		labelMovimientosTexto = new JLabel("Movimientos: 0");
+		labelMovimientosTexto.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		labelMovimientosTexto.setHorizontalAlignment(JLabel.CENTER);
+		labelMovimientosTexto.setBackground(new Color(199, 199, 199));
+		labelMovimientosTexto.setBounds(39, 700, 200, 30);
+		frame.getContentPane().add(labelMovimientosTexto, BorderLayout.NORTH);
 	}
 	
 
@@ -97,7 +95,13 @@ public class Interfaz {
         for (int fila = 0; fila < tableroJuego.totalFilas(); fila++) {
             for (int col = 0; col < tableroJuego.totalColumnas(); col++) {
                 int valor = tableroJuego.dameFicha(fila, col).obtenerValorFicha();
-                JButton boton = new JButton(String.valueOf(valor));
+                if(valor == 0) {
+                	boton = new JButton("");
+                	boton.setBackground(Color.LIGHT_GRAY);
+                } else {
+                	boton = new JButton(String.valueOf(valor));
+                }
+                
                 boton.setFont(new Font("Arial", Font.PLAIN, 18));
                 boton.setFocusPainted(false);
                 boton.setBorderPainted(true);
@@ -115,6 +119,7 @@ public class Interfaz {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (tableroJuego.moverCelda(fila, col)) {
+                	actualizarContadorMovimientos();
                     actualizarTablero();
                     if (tableroJuego.ganarJuego()) {
                         JOptionPane.showMessageDialog(frame, "¡Felicidades! Has ganado el juego.");
@@ -122,5 +127,9 @@ public class Interfaz {
                 }
             }
         });
+    }
+	
+	private void actualizarContadorMovimientos() {
+		labelMovimientosTexto.setText("Movimientos: " + tableroJuego.verCantidadMovimientosRealizados());
     }
 }
