@@ -10,10 +10,12 @@ public class TableroFichas {
 	private final static int TABLERO_FILAS = 4;
 	private final static int TABLERO_COLUMNAS = 4;
 	private final static int VACIO = 0;
+	private int movimientos;
 
 	
 	public TableroFichas( ) {
 		this.fichas = new Ficha[TABLERO_FILAS][TABLERO_COLUMNAS];
+		this.movimientos = 0;
 		inicializarFichasDesordenadas();
 	}
 	
@@ -29,6 +31,10 @@ public class TableroFichas {
 		return TABLERO_COLUMNAS;
 	}
 	
+	public int verCantidadMovimientosRealizados() {
+		return this.movimientos;
+	}
+	
 	public boolean moverCelda(int fila, int col) {
         int[] posVacio = encontrarPosicionVacio();
         int filaVacio = posVacio[0];
@@ -36,6 +42,7 @@ public class TableroFichas {
 
         if (esAdyacente(fila, col, filaVacio, columnaVacio)) {
             fichas[filaVacio][columnaVacio].intercambiarValores(fichas[fila][col]);
+            this.movimientos++;
             return true;
         }
         return false;
