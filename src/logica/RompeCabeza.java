@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-public class TableroFichas {
-	private Ficha[][] fichas;
+public class RompeCabeza {
+	private Pieza[][] piezas;
 	private final static int TABLERO_FILAS = 4;
 	private final static int TABLERO_COLUMNAS = 4;
 	private final static int VACIO = 0;
 	private int movimientos;
 
 	
-	public TableroFichas( ) {
-		this.fichas = new Ficha[TABLERO_FILAS][TABLERO_COLUMNAS];
+	public RompeCabeza( ) {
+		this.piezas = new Pieza[TABLERO_FILAS][TABLERO_COLUMNAS];
 		this.movimientos = 0;
 		inicializarFichasDesordenadas();
 	}
 	
-	public Ficha dameFicha(int i, int j) {
-		return this.fichas[i][j];
+	public Pieza dameFicha(int i, int j) {
+		return this.piezas[i][j];
 	}
 	
 	public int totalFilas() {
@@ -41,7 +41,7 @@ public class TableroFichas {
         int columnaVacio = posVacio[1];
 
         if (esAdyacente(fila, col, filaVacio, columnaVacio)) {
-            fichas[filaVacio][columnaVacio].intercambiarValores(fichas[fila][col]);
+            piezas[filaVacio][columnaVacio].intercambiarValores(piezas[fila][col]);
             this.movimientos++;
             return true;
         }
@@ -52,7 +52,7 @@ public class TableroFichas {
         int contador = 1; 
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {
-                int valorActual = fichas[fila][col].obtenerValorFicha();
+                int valorActual = piezas[fila][col].obtenerValorFicha();
                 if (fila == TABLERO_FILAS - 1 && col == TABLERO_COLUMNAS - 1) {
                     return valorActual == VACIO;
                 }
@@ -82,19 +82,19 @@ public class TableroFichas {
     }
 	
 	private void inicializarFichasDesordenadas() {
-        List<Ficha> listaFichas = new ArrayList<>();
+        List<Pieza> listaFichas = new ArrayList<>();
         for (int valor = 1; valor <= 15; valor++) {
-            listaFichas.add(new Ficha(valor));
+            listaFichas.add(new Pieza(valor));
         }
         Collections.shuffle(listaFichas); // con el método suffle desordenados la listaFichas!!!!
         int index = 0;
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {
                 if (index < listaFichas.size()) {
-                    this.fichas[fila][col] = listaFichas.get(index);
+                    this.piezas[fila][col] = listaFichas.get(index);
                     index++;
                 } else {
-                    this.fichas[fila][col] = new Ficha(VACIO);
+                    this.piezas[fila][col] = new Pieza(VACIO);
                 }
             }
         }

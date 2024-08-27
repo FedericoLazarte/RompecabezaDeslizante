@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import logica.TableroFichas;
+import logica.RompeCabeza;
 
 public class Interfaz {
-	private TableroFichas tableroJuego;
+	private RompeCabeza tableroJuego;
 	private JPanel panelContenedorDeLasFichas;
 	private JFrame frame;
 	JLabel labelMovimientosTexto;
@@ -44,7 +44,7 @@ public class Interfaz {
 	 * Create the application.
 	 */
 	public Interfaz() {
-		this.tableroJuego = new TableroFichas();
+		this.tableroJuego = new RompeCabeza();
 		initialize();
 	}
 
