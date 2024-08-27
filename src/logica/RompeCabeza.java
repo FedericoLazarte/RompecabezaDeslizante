@@ -19,7 +19,7 @@ public class RompeCabeza {
 		inicializarFichasDesordenadas();
 	}
 	
-	public Pieza dameFicha(int i, int j) {
+	public Pieza damePieza(int i, int j) {
 		return this.piezas[i][j];
 	}
 	
@@ -52,7 +52,7 @@ public class RompeCabeza {
         int contador = 1; 
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {
-                int valorActual = piezas[fila][col].obtenerValorFicha();
+                int valorActual = piezas[fila][col].obtenerValorPieza();
                 if (fila == TABLERO_FILAS - 1 && col == TABLERO_COLUMNAS - 1) {
                     return valorActual == VACIO;
                 }
@@ -68,7 +68,7 @@ public class RompeCabeza {
 	private int[] encontrarPosicionVacio() {
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {
-                if (this.dameFicha(fila, col).obtenerValorFicha() == VACIO) {
+                if (this.damePieza(fila, col).obtenerValorPieza() == VACIO) {
                     return new int[]{fila, col};
                 }
             }
@@ -82,16 +82,16 @@ public class RompeCabeza {
     }
 	
 	private void inicializarFichasDesordenadas() {
-        List<Pieza> listaFichas = new ArrayList<>();
-        for (int valor = 1; valor <= 15; valor++) {
-            listaFichas.add(new Pieza(valor));
+        List<Pieza> listaPiezas = new ArrayList<>();
+        for (int valor = 1; valor <= totalDePiezas() -1; valor++) {
+            listaPiezas.add(new Pieza(valor));
         }
-        Collections.shuffle(listaFichas); // con el método suffle desordenados la listaFichas!!!!
+        Collections.shuffle(listaPiezas); // con el método suffle desordenados la listaFichas!!!!
         int index = 0;
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {
-                if (index < listaFichas.size()) {
-                    this.piezas[fila][col] = listaFichas.get(index);
+                if (index < listaPiezas.size()) {
+                    this.piezas[fila][col] = listaPiezas.get(index);
                     index++;
                 } else {
                     this.piezas[fila][col] = new Pieza(VACIO);
@@ -99,5 +99,9 @@ public class RompeCabeza {
             }
         }
     }
+	
+	private int totalDePiezas() {
+		return TABLERO_FILAS * TABLERO_COLUMNAS;
+	}
 	
 }

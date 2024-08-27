@@ -94,7 +94,7 @@ public class Interfaz {
         panelContenedorDeLasFichas.removeAll();
         for (int fila = 0; fila < tableroJuego.totalFilas(); fila++) {
             for (int col = 0; col < tableroJuego.totalColumnas(); col++) {
-                int valor = tableroJuego.dameFicha(fila, col).obtenerValorFicha();
+                int valor = tableroJuego.damePieza(fila, col).obtenerValorPieza();
                 if(valor == 0) {
                 	boton = new JButton("");
                 	boton.setBackground(Color.LIGHT_GRAY);

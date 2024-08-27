@@ -7,13 +7,13 @@ public class Pieza {
 		this.valor = valor;
 	}
 	
-	public int obtenerValorFicha() {
+	public int obtenerValorPieza() {
 		return this.valor;
 	}
 	
-	public void intercambiarValores(Pieza otraFicha) {
-		int valorFichaAux = this.valor;
-		this.valor = otraFicha.valor;
-		otraFicha.valor = valorFichaAux;
+	public void intercambiarValores(Pieza otraPieza) {
+		int valorPiezaAux = this.valor;
+		this.valor = otraPieza.valor;
+		otraPieza.valor = valorPiezaAux;
 	}
 }
