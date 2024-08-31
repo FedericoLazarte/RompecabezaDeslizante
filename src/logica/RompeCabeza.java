@@ -48,7 +48,7 @@ public class RompeCabeza {
         return false;
     }
 	
-	public boolean ganarJuego() {
+	public boolean estaGanado() {
         int contador = 1; 
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {

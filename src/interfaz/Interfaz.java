@@ -52,6 +52,13 @@ public class Interfaz {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		crearFrame();
+		crearContenedorPiezas();
+		actualizarTablero();
+		visualizacionMovimientos();
+	}
+
+	private void crearFrame() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame = new JFrame();
@@ -65,10 +72,9 @@ public class Interfaz {
 				altoFrame);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		// ----------------------- Tablero Fichas ---------------------------------
-		
+	}
+	
+	private void crearContenedorPiezas() {
 		panelContenedorDeLasFichas = new JPanel();
 		panelContenedorDeLasFichas.setBounds(39, 10, 400, 400);
 		panelContenedorDeLasFichas.setBackground(new Color(173, 159, 148));
@@ -77,16 +83,6 @@ public class Interfaz {
 		int anchuraTablero = tableroJuego.totalColumnas();
 		panelContenedorDeLasFichas.setLayout(new GridLayout(alturaTablero, anchuraTablero, 4, 4));
 		frame.getContentPane().add(panelContenedorDeLasFichas);
-		actualizarTablero();
-		
-		// ------------------------- Labels -----------------------------------
-		
-		labelMovimientosTexto = new JLabel("Movimientos: 0");
-		labelMovimientosTexto.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		labelMovimientosTexto.setHorizontalAlignment(JLabel.CENTER);
-		labelMovimientosTexto.setBackground(new Color(199, 199, 199));
-		labelMovimientosTexto.setBounds(39, 700, 200, 30);
-		frame.getContentPane().add(labelMovimientosTexto, BorderLayout.NORTH);
 	}
 	
 
@@ -121,13 +117,22 @@ public class Interfaz {
                 if (tableroJuego.moverCelda(fila, col)) {
                 	actualizarContadorMovimientos();
                     actualizarTablero();
-                    if (tableroJuego.ganarJuego()) {
+                    if (tableroJuego.estaGanado()) {
                         JOptionPane.showMessageDialog(frame, "¡Felicidades! Has ganado el juego.");
                     }
                 }
             }
         });
     }
+	
+	private void visualizacionMovimientos() {
+		labelMovimientosTexto = new JLabel("Movimientos: 0");
+		labelMovimientosTexto.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		labelMovimientosTexto.setHorizontalAlignment(JLabel.CENTER);
+		labelMovimientosTexto.setBackground(new Color(199, 199, 199));
+		labelMovimientosTexto.setBounds(39, 700, 200, 30);
+		frame.getContentPane().add(labelMovimientosTexto, BorderLayout.NORTH);
+	}
 	
 	private void actualizarContadorMovimientos() {
 		labelMovimientosTexto.setText("Movimientos: " + tableroJuego.verCantidadMovimientosRealizados());
