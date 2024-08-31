@@ -103,5 +103,4 @@ public class RompeCabeza {
 	private int totalDePiezas() {
 		return TABLERO_FILAS * TABLERO_COLUMNAS;
 	}
-	
 }
