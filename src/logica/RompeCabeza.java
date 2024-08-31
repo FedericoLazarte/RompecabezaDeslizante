@@ -7,13 +7,15 @@ import java.util.ArrayList;
 
 public class RompeCabeza {
 	private Pieza[][] piezas;
-	private final static int TABLERO_FILAS = 4;
-	private final static int TABLERO_COLUMNAS = 4;
+	private final int TABLERO_FILAS;
+	private final int TABLERO_COLUMNAS;
 	private final static int VACIO = 0;
 	private int movimientos;
 
 	
-	public RompeCabeza( ) {
+	public RompeCabeza(int i) {
+		this.TABLERO_FILAS=elegirDificultad(i);
+		this.TABLERO_COLUMNAS= elegirDificultad(i);
 		this.piezas = new Pieza[TABLERO_FILAS][TABLERO_COLUMNAS];
 		this.movimientos = 0;
 		inicializarFichasDesordenadas();
@@ -48,7 +50,7 @@ public class RompeCabeza {
         return false;
     }
 	
-	public boolean ganarJuego() {
+	public boolean estaGanado() {
         int contador = 1; 
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {
@@ -86,7 +88,7 @@ public class RompeCabeza {
         for (int valor = 1; valor <= totalDePiezas() -1; valor++) {
             listaPiezas.add(new Pieza(valor));
         }
-        Collections.shuffle(listaPiezas); // con el método suffle desordenados la listaFichas!!!!
+        Collections.shuffle(listaPiezas); // con el método suffle desordenamos la listaFichas!!!!
         int index = 0;
         for (int fila = 0; fila < TABLERO_FILAS; fila++) {
             for (int col = 0; col < TABLERO_COLUMNAS; col++) {
@@ -102,6 +104,17 @@ public class RompeCabeza {
 	
 	private int totalDePiezas() {
 		return TABLERO_FILAS * TABLERO_COLUMNAS;
+	}
+	
+	
+	private int elegirDificultad(int i) {
+		if(i == 1) { //índice 1 = fácil
+			return 3; 
+		}
+		if(i ==2) { //índice 2 = normal
+			return 4; 
+		}
+		return 5;   //índice 3 = difícil
 	}
 	
 }
