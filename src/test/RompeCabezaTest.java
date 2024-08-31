@@ -12,27 +12,27 @@ public class RompeCabezaTest {
 
 	@Test
 	public void noSeRealizoNingunMovimientoTest() {
-		RompeCabeza rc = new RompeCabeza();
+		RompeCabeza rc = new RompeCabeza(4);
 		assertEquals(0, rc.verCantidadMovimientosRealizados());
 	}
 	
 	@Test
 	public void realizarMovimientoDePiezaNoContiguaACeroTest() {
-		RompeCabeza rc = new RompeCabeza();
+		RompeCabeza rc = new RompeCabeza(4);
 		rc.moverCelda(0, 0);
 		assertEquals(0, rc.verCantidadMovimientosRealizados());
 	}
 	
 	@Test
 	public void seRealizoUnMovimientoPiezaContiguaACeroTest() {
-		RompeCabeza rc = new RompeCabeza();
+		RompeCabeza rc = new RompeCabeza(4);
 		rc.moverCelda(3, 2);
 		assertEquals(1, rc.verCantidadMovimientosRealizados());
 	}
 	
 	@Test
 	public void seRealizoMasDeUnMovimientoDePiezaContiguaACeroTest() {
-		RompeCabeza rc = new RompeCabeza();
+		RompeCabeza rc = new RompeCabeza(4);
 		rc.moverCelda(3, 2);
 		rc.moverCelda(3, 1);
 		assertEquals(2, rc.verCantidadMovimientosRealizados());
@@ -40,7 +40,7 @@ public class RompeCabezaTest {
 	
 	@Ignore@Test
 	public void estaGanadoElJuegoTest() {
-		 RompeCabeza puzzle = new RompeCabeza();
+		 RompeCabeza puzzle = new RompeCabeza(4);
 	        @SuppressWarnings("unused")
 			Pieza[][] piezas = {
 	            {new Pieza(1), new Pieza(2), new Pieza(3), new Pieza(4)},
@@ -56,7 +56,7 @@ public class RompeCabezaTest {
 	
 	 @Test
 	    public void noEstaGanadoElJuegoTest() {
-	        RompeCabeza puzzle = new RompeCabeza();
+	        RompeCabeza puzzle = new RompeCabeza(4);
 	        assertFalse(puzzle.estaGanado());
 	    }
 
