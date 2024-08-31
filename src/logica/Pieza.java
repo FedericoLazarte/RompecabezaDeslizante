@@ -4,6 +4,7 @@ public class Pieza {
 	private int valor;
 	
 	public Pieza(int valor) {
+		valorInvalido(valor);
 		this.valor = valor;
 	}
 	
@@ -15,5 +16,10 @@ public class Pieza {
 		int valorPiezaAux = this.valor;
 		this.valor = otraPieza.valor;
 		otraPieza.valor = valorPiezaAux;
+	}
+	
+	private void valorInvalido(int valor) {
+		if(valor < 0)
+			throw new IllegalArgumentException("El valor de la pieza no puede ser menor a 0");
 	}
 }
