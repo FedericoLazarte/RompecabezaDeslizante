@@ -53,3 +53,4 @@ release.properties
 pom.xml.properties
 pom.xml.releaseBackup
 pom.xml.tag
+/bin/

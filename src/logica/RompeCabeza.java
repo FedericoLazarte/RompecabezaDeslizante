@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class RompeCabeza {
 	private Pieza[][] piezas;
-	private final static int TABLERO_FILAS = 4;
-	private final static int TABLERO_COLUMNAS = 4;
+	private final static int TABLERO_FILAS = 2;
+	private final static int TABLERO_COLUMNAS = 2;
 	private final static int VACIO = 0;
 	private int movimientos;
 
@@ -18,6 +18,12 @@ public class RompeCabeza {
 		this.movimientos = 0;
 		inicializarFichasDesordenadas();
 	}
+	
+	public void reiniciarJuego() {
+	    this.movimientos = 0;
+	    inicializarFichasDesordenadas();
+	}
+
 	
 	public Pieza damePieza(int i, int j) {
 		return this.piezas[i][j];
