@@ -136,11 +136,11 @@ public class Interfaz {
     private void actualizarContadorMovimientos() {
         labelMovimientosTexto.setText("Movimientos: " + tableroJuego.verCantidadMovimientosRealizados());
     }
-
+    
     private void mostrarPantallaVictoria() {
         frmRompecabezas.getContentPane().removeAll();
 
-        PanelVictoria panelVictoria = new PanelVictoria(
+        VentanaVictoria panelVictoria = new VentanaVictoria(
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -158,6 +158,7 @@ public class Interfaz {
         frmRompecabezas.getContentPane().add(panelVictoria);
         frmRompecabezas.repaint();
     }
+
 
     private void reiniciarInterfaz() {
         tableroJuego.reiniciarJuego();
