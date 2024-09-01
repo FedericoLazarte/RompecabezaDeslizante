@@ -5,15 +5,18 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import logica.RompeCabeza;
+
 
 public class Interfaz {
     private RompeCabeza tableroJuego;
@@ -29,7 +32,10 @@ public class Interfaz {
     private JButton iniciar;
     private JComboBox<String> comboBox;
     private int numeroDificultad = 4; // Valor predeterminado para el estado base
-
+    
+    
+    
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
@@ -116,7 +122,13 @@ public class Interfaz {
 
     private void crearFrameJuego() {
         frameJuego = new JFrame();
-        frameJuego.setBounds(100, 100, 500, 650);
+        int anchoFrame = 500;
+        int altoFrame = 650;
+        frameJuego.setBounds(
+                (PantallaUtils.anchoPantalla - anchoFrame) / 2,
+                (PantallaUtils.altoPantalla - altoFrame) / 2,
+                anchoFrame,
+                altoFrame);
         frameJuego.getContentPane().setBackground(new Color(251, 230, 198));
         frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameJuego.setLocationRelativeTo(null);
@@ -144,8 +156,6 @@ public class Interfaz {
         panelContenedorDeLasFichas = new JPanel();
         int tamañoTablero = tableroJuego.totalFilas(); 
         int tamañoPanel = 400; 
-       // int tamañoBotón = (tamañoPanel - 4 * (tamañoTablero - 1)) / tamañoTablero;
-
         panelContenedorDeLasFichas.setBounds(39, 10, tamañoPanel, tamañoPanel);
         panelContenedorDeLasFichas.setBackground(new Color(173, 159, 148));
         panelContenedorDeLasFichas.setBorder(new LineBorder(new Color(173, 159, 148), 4));
@@ -179,8 +189,7 @@ public class Interfaz {
                 actualizarContadorMovimientos();
                 actualizarTablero();
                 if (tableroJuego.estaGanado()) {
-                    JOptionPane.showMessageDialog(frameJuego, "¡Felicidades! Has ganado el juego.");
-                }
+                	mostrarPantallaVictoria();                }
             }
         });
     }
@@ -196,6 +205,36 @@ public class Interfaz {
 
     private void actualizarContadorMovimientos() {
         labelMovimientosTexto.setText("Movimientos: " + tableroJuego.verCantidadMovimientosRealizados());
+    }
+    
+    private void mostrarPantallaVictoria() {
+    	frameJuego.getContentPane().removeAll();
+
+		VentanaVictoria panelVictoria = new VentanaVictoria(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reiniciarInterfaz();
+			}
+		}, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+
+		frameJuego.getContentPane().add(panelVictoria);
+		frameJuego.repaint();
+    }
+    
+    private void reiniciarInterfaz() {
+        tableroJuego.reiniciarJuego();
+
+        frameJuego.getContentPane().removeAll();
+        crearContenedorPiezas();
+        actualizarTablero();
+        labelMovimientosTexto.setText("Movimientos: 0");
+        frameJuego.getContentPane().add(labelMovimientosTexto, BorderLayout.NORTH);
+        frameJuego.repaint();
     }
 
     private void mostrarPantallaInicio() {

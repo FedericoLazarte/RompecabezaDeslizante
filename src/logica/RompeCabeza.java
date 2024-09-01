@@ -18,6 +18,11 @@ public class RompeCabeza {
         this.movimientos = 0;
         inicializarFichasDesordenadas();
     }
+    
+    public void reiniciarJuego() {
+	    this.movimientos = 0;
+	    inicializarFichasDesordenadas();
+	}
 
     public Pieza damePieza(int i, int j) {
         return this.piezas[i][j];
