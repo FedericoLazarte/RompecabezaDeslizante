@@ -4,17 +4,27 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
+
 import logica.RompeCabeza;
 
 
@@ -32,6 +42,9 @@ public class Interfaz {
     private JButton iniciar;
     private JComboBox<String> comboBox;
     private int numeroDificultad = 4; // Valor predeterminado para el estado base
+    private String imagenAjugar ="src/imagenes/imagenFondo.png"; // Valor predeterminado para el estado base
+	private final ButtonGroup botonImagen = new ButtonGroup();
+
     
     
     
@@ -67,20 +80,44 @@ public class Interfaz {
         frameInicio.setLocationRelativeTo(null);
         frameInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameInicio.getContentPane().setLayout(null);
-
+        
+        // metodos se llaman antes para que esten sobre el fondo 
+        
+        
         tituloJuego();
         opciones();
         mensajeOpciones();
         botonIniciar();
+        //-------------------------nuevos llamados-----------------------------
+        seleccionImagen();
+        imagenesDeEjemplo();
+        
+        
+        //----------------------Cargar la imagen---------------------------------//
+        ImageIcon imagen = new ImageIcon("src/imagenes/fondo_inicio.png");
+        Image imagenEscalada = imagen.getImage().getScaledInstance(frameInicio.getWidth(), frameInicio.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon imagenRedimensionada = new ImageIcon(imagenEscalada);
+
+        // Crear un JLabel con la imagen redimensionada
+        JLabel etiquetaImagen = new JLabel(imagenRedimensionada);
+
+        // Establecer el tamaño y la posición de la etiqueta para que ocupe todo el frame
+        etiquetaImagen.setBounds(0, 0, frameInicio.getWidth(), frameInicio.getHeight());
+        frameInicio.getContentPane().add(etiquetaImagen);
+
+        // Asegurarse de que el JLabel esté al fondo
+        frameInicio.getContentPane().setComponentZOrder(etiquetaImagen, frameInicio.getContentPane().getComponentCount() - 1);
+        
+        //------------------------------------------------------------------//
+        
     }
 
     private void tituloJuego() {
         labelTitulo = new JLabel("Rompecabezas Deslizante");
         labelTitulo.setFont(new Font("Tahoma", Font.PLAIN, 42));
         labelTitulo.setHorizontalAlignment(JLabel.CENTER);
-        labelTitulo.setBackground(new Color(251, 230, 198));
-        labelTitulo.setOpaque(true);
-        labelTitulo.setBounds(16, 50, 650, 150);
+        labelTitulo.setOpaque(false); //hace transparente el texto 
+        labelTitulo.setBounds(70, 50, 550, 100);
         frameInicio.getContentPane().add(labelTitulo);
     }
 
@@ -95,8 +132,7 @@ public class Interfaz {
         labelMensajeOpciones = new JLabel("Seleccione una dificultad:");
         labelMensajeOpciones.setFont(new Font("Tahoma", Font.PLAIN, 22));
         labelMensajeOpciones.setHorizontalAlignment(JLabel.CENTER);
-        labelMensajeOpciones.setBackground(new Color(251, 230, 198));
-        labelMensajeOpciones.setOpaque(true);
+        labelMensajeOpciones.setOpaque(false);
         labelMensajeOpciones.setBounds(25, 256, 250, 22);
         frameInicio.getContentPane().add(labelMensajeOpciones);
     }
@@ -120,6 +156,94 @@ public class Interfaz {
         });
     }
 
+//-------------------------------------------------------------------------------------------    
+    private void seleccionImagen() {
+    	JRadioButton option1 = new JRadioButton("Imagen 1");
+        JRadioButton option2 = new JRadioButton("Imagen 2");
+        JRadioButton option3 = new JRadioButton("Imagen 3");
+        
+        
+        // Establecer las posiciones y tamaños
+        option1.setBounds(80, 356, 80, 22); // (x, y, ancho, alto)
+        option2.setBounds(300, 356, 80, 22);
+        option3.setBounds(520, 356, 80, 22);
+
+        
+        //hace transparente el texto 
+        option1.setOpaque(false); 
+        option2.setOpaque(false); 
+        option3.setOpaque(false); 
+
+        
+        // Agrupar los JRadioButton
+        botonImagen.add(option1);
+        botonImagen.add(option2);
+        botonImagen.add(option3);
+        
+        ActionListener radioButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+                
+                if (option1.isSelected()) {
+                    imagenAjugar = "src/imagenes/imagenFondo.png";
+                } else if (option2.isSelected()) {
+                	imagenAjugar = "src/imagenes/imagenFondo2.png";
+                } else if (option3.isSelected()) {
+                	imagenAjugar = "src/imagenes/imagenFondo3.png";
+                }
+               
+               
+            }
+        };
+        
+        // Asignar el ActionListener a los JRadioButton
+        option1.addActionListener(radioButtonListener);
+        option2.addActionListener(radioButtonListener);
+        option3.addActionListener(radioButtonListener);
+        
+
+        // Agregar los JRadioButton al frame
+        frameInicio.add(option1);
+        frameInicio.add(option2);
+        frameInicio.add(option3);   
+    }
+    
+    
+    private void imagenesDeEjemplo() {
+        JLabel imagenEjem1 = new JLabel();
+        JLabel imagenEjem2 = new JLabel();
+        JLabel imagenEjem3 = new JLabel();
+        
+        imagenEjem1.setBounds(45, 386, 150, 112); // Posición y tamaño del JLabel
+        imagenEjem2.setBounds(270, 386, 150, 112); // Ajusté la posición para evitar solapamientos
+        imagenEjem3.setBounds(490, 386, 150, 112); // Ajusté la posición para evitar solapamientos
+        
+        // Imágen 1 de muestra
+        ImageIcon icon1 = new ImageIcon("src//imagenes//imagen1.png"); 
+        Image img1 = icon1.getImage().getScaledInstance(imagenEjem1.getWidth(), imagenEjem1.getHeight(), Image.SCALE_SMOOTH);
+        imagenEjem1.setIcon(new ImageIcon(img1));
+         
+        // Imágen 2 de muestra 
+        ImageIcon icon2 = new ImageIcon("src//imagenes//imagen2.png"); 
+        Image img2 = icon2.getImage().getScaledInstance(imagenEjem2.getWidth(), imagenEjem2.getHeight(), Image.SCALE_SMOOTH);
+        imagenEjem2.setIcon(new ImageIcon(img2));
+        
+        // Imágen 3 de muestra 
+        ImageIcon icon3 = new ImageIcon("src//imagenes//imagen3.png"); 
+        Image img3 = icon3.getImage().getScaledInstance(imagenEjem3.getWidth(), imagenEjem3.getHeight(), Image.SCALE_SMOOTH);
+        imagenEjem3.setIcon(new ImageIcon(img3));
+        
+        // Agregar las imágenes al frame de Inicio
+        frameInicio.add(imagenEjem1);
+        frameInicio.add(imagenEjem2);
+        frameInicio.add(imagenEjem3);
+    }
+    
+    
+
+    
+//----------------------------------------------------------------------------------------------    
     private void crearFrameJuego() {
         frameJuego = new JFrame();
         int anchoFrame = 500;
@@ -165,11 +289,35 @@ public class Interfaz {
 
     private void actualizarTablero() {
         panelContenedorDeLasFichas.removeAll();
+        
+        //revisa si puede leer la imagen de manera correcta
+        BufferedImage imagenCompleta = null;
+        try {
+            imagenCompleta = ImageIO.read(new File(imagenAjugar));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        
         int tamañoTablero = tableroJuego.totalFilas();
+        
+        BufferedImage imagenEscalada = redimensionarImagen(imagenCompleta);
+        
+        // Calcular el tamaño de cada pieza
+        int partWidth = imagenEscalada.getWidth() / tamañoTablero;
+        int partHeight = imagenEscalada.getHeight() / tamañoTablero;
+        
         for (int fila = 0; fila < tamañoTablero; fila++) {
             for (int col = 0; col < tamañoTablero; col++) {
-                int valor = tableroJuego.damePieza(fila, col).obtenerValorPieza();
-                boton = valor == 0 ? new JButton("") : new JButton(String.valueOf(valor));
+                int valor = tableroJuego.damePieza(fila, col).obtenerValorPieza(); // Aquí es importante que el valor esté desordenado como el tablero
+                
+                if (valor != 0) {
+                    BufferedImage parteImagen = calcularParteDeImagen(tamañoTablero, imagenEscalada, partWidth,partHeight, valor);
+                    
+                    boton = new JButton(new ImageIcon(parteImagen));
+                } else {
+                    boton = new JButton(""); // Si el valor es 0, creamos un botón vacío
+                }
                 
                 boton.setFont(new Font("Arial", Font.PLAIN, 18));
                 boton.setFocusPainted(false);
@@ -179,10 +327,42 @@ public class Interfaz {
                 agregarAccionBoton(boton, fila, col);
             }
         }
+        
         panelContenedorDeLasFichas.revalidate();
         panelContenedorDeLasFichas.repaint();
     }
 
+	private BufferedImage calcularParteDeImagen(int tamañoTablero, BufferedImage imagenEscalada, int partWidth,int partHeight, int valor) {
+		// Calcular las coordenadas de la subimagen en base al valor de la pieza
+		int filaOriginal = (valor - 1) / tamañoTablero; // La fila original de la imagen
+		int colOriginal = (valor - 1) % tamañoTablero; // La columna original de la imagen
+		
+		BufferedImage parteImagen = imagenEscalada.getSubimage(
+		    colOriginal * partWidth,  // Posición horizontal original
+		    filaOriginal * partHeight, // Posición vertical original
+		    partWidth, partHeight);
+		return parteImagen;
+	}
+
+	private BufferedImage redimensionarImagen(BufferedImage imagenCompleta) {
+		// Calcular el tamaño total necesario basado en el tamaño del tablero
+        int anchoNecesario = panelContenedorDeLasFichas.getWidth();
+        int altoNecesario = panelContenedorDeLasFichas.getHeight();
+        
+        // Redimensionar la imagen a las dimensiones necesarias
+        Image imagenRedimensionada = imagenCompleta.getScaledInstance(anchoNecesario, altoNecesario, Image.SCALE_SMOOTH);
+        
+        // Convertir la imagen redimensionada a BufferedImage
+        BufferedImage imagenEscalada = new BufferedImage(anchoNecesario, altoNecesario, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = imagenEscalada.createGraphics();
+        g2d.drawImage(imagenRedimensionada, 0, 0, null);
+        g2d.dispose();
+		return imagenEscalada;
+	}
+    
+   
+	
+//----------------------------------------------------------------------------------------------------	
     private void agregarAccionBoton(JButton boton, int fila, int col) {
         boton.addActionListener(e -> {
             if (tableroJuego.moverCelda(fila, col)) {
