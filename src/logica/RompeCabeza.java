@@ -52,7 +52,8 @@ public class RompeCabeza {
         if (esAdyacente(fila, col, filaVacio, columnaVacio)) {
             piezas[filaVacio][columnaVacio].intercambiarValores(piezas[fila][col]);
             this.movimientos++;
-            return true;
+            this.controlAudio.reproducirSonido("deslizar.wav"); // sonido al mover
+            return true;          
         }
         return false;
     }
