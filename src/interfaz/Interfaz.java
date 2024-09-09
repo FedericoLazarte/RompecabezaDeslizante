@@ -262,10 +262,10 @@ public class Interfaz {
 		tableroJuego = new RompeCabeza(numeroDificultad);
 		crearContenedorPiezas();
 		if (modoJuego == 1) {
-			actualizarTableroConNúmeros();
+			actualizarTableroConNumeros();
 		}
 		if (modoJuego == 2) {
-			actualizarTableroConImágenes();
+			actualizarTableroConImagenes();
 		}
 		visualizacionMovimientos();
 	}
@@ -275,27 +275,27 @@ public class Interfaz {
 			frameJuego.remove(panelContenedorDeLasFichas);
 		}
 		panelContenedorDeLasFichas = new JPanel();
-		int tamañoTablero = tableroJuego.totalFilas();
-		int tamañoPanel = 400;
-		panelContenedorDeLasFichas.setBounds(39, 10, tamañoPanel, tamañoPanel);
+		int tamanioTablero = tableroJuego.totalFilas();
+		int tamanioPanel = 400;
+		panelContenedorDeLasFichas.setBounds(39, 10, tamanioPanel, tamanioPanel);
 		panelContenedorDeLasFichas.setBackground(new Color(173, 159, 148));
 		panelContenedorDeLasFichas.setBorder(new LineBorder(new Color(173, 159, 148), 4));
-		panelContenedorDeLasFichas.setLayout(new GridLayout(tamañoTablero, tamañoTablero, 4, 4));
+		panelContenedorDeLasFichas.setLayout(new GridLayout(tamanioTablero, tamanioTablero, 4, 4));
 		frameJuego.getContentPane().add(panelContenedorDeLasFichas);
 	}
 
-	private void actualizarTableroConImágenes() {
+	private void actualizarTableroConImagenes() {
 		panelContenedorDeLasFichas.removeAll();
 		BufferedImage imagenCompleta = iniciarImagen();
-		int tamañoTablero = tableroJuego.totalFilas();
+		int tamanioTablero = tableroJuego.totalFilas();
 		BufferedImage imagenEscalada = redimensionarImagen(imagenCompleta);
-		int partWidth = imagenEscalada.getWidth() / tamañoTablero;
-		int partHeight = imagenEscalada.getHeight() / tamañoTablero;
-		for (int fila = 0; fila < tamañoTablero; fila++) {
-			for (int col = 0; col < tamañoTablero; col++) {
+		int partWidth = imagenEscalada.getWidth() / tamanioTablero;
+		int partHeight = imagenEscalada.getHeight() / tamanioTablero;
+		for (int fila = 0; fila < tamanioTablero; fila++) {
+			for (int col = 0; col < tamanioTablero; col++) {
 				int valor = tableroJuego.damePieza(fila, col).obtenerValorPieza();
 				if (valor != 0) {
-					BufferedImage parteImagen = calcularParteDeImagen(tamañoTablero, imagenEscalada, partWidth,
+					BufferedImage parteImagen = calcularParteDeImagen(tamanioTablero, imagenEscalada, partWidth,
 							partHeight, valor);
 					boton = new JButton(new ImageIcon(parteImagen));
 				} else {
@@ -312,11 +312,11 @@ public class Interfaz {
 		panelContenedorDeLasFichas.repaint();
 	}
 
-	private void actualizarTableroConNúmeros() {
+	private void actualizarTableroConNumeros() {
 		panelContenedorDeLasFichas.removeAll();
-		int tamañoTablero = tableroJuego.totalFilas();
-		for (int fila = 0; fila < tamañoTablero; fila++) {
-			for (int col = 0; col < tamañoTablero; col++) {
+		int tamanioTablero = tableroJuego.totalFilas();
+		for (int fila = 0; fila < tamanioTablero; fila++) {
+			for (int col = 0; col < tamanioTablero; col++) {
 				int valor = tableroJuego.damePieza(fila, col).obtenerValorPieza();
 				boton = valor == 0 ? new JButton("") : new JButton(String.valueOf(valor));
 				boton.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -341,10 +341,10 @@ public class Interfaz {
 		return imagenCompleta;
 	}
 
-	private BufferedImage calcularParteDeImagen(int tamañoTablero, BufferedImage imagenEscalada, int partWidth,
+	private BufferedImage calcularParteDeImagen(int tamanioTablero, BufferedImage imagenEscalada, int partWidth,
 			int partHeight, int valor) {
-		int filaOriginal = (valor - 1) / tamañoTablero;
-		int colOriginal = (valor - 1) % tamañoTablero;
+		int filaOriginal = (valor - 1) / tamanioTablero;
+		int colOriginal = (valor - 1) % tamanioTablero;
 
 		BufferedImage parteImagen = imagenEscalada.getSubimage(colOriginal * partWidth, filaOriginal * partHeight,
 				partWidth, partHeight);
@@ -368,9 +368,9 @@ public class Interfaz {
 			if (tableroJuego.moverCelda(fila, col)) {
 				actualizarContadorMovimientos();
 				if (modoJuego == 1) {
-					actualizarTableroConNúmeros();
+					actualizarTableroConNumeros();
 				} else if (modoJuego == 2) {
-					actualizarTableroConImágenes();
+					actualizarTableroConImagenes();
 				}
 				if (tableroJuego.estaGanado()) {
 					mostrarPantallaVictoria();
@@ -414,10 +414,10 @@ public class Interfaz {
 		frameJuego.getContentPane().removeAll();
 		crearContenedorPiezas();
 		if (modoJuego == 1) {
-			actualizarTableroConNúmeros();
+			actualizarTableroConNumeros();
 		}
 		if (modoJuego == 2) {
-			actualizarTableroConImágenes();
+			actualizarTableroConImagenes();
 		}
 		labelMovimientosTexto.setText("Movimientos: 0");
 		frameJuego.getContentPane().add(labelMovimientosTexto, BorderLayout.NORTH);
