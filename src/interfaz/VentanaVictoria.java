@@ -14,7 +14,6 @@ import javax.swing.border.LineBorder;
 import java.awt.Component;
 
 public class VentanaVictoria extends JPanel {
-
     private static final long serialVersionUID = 1L;
     private JTextField textoVictoria;
     public VentanaVictoria(ActionListener reiniciarListener, ActionListener salirListener) {
