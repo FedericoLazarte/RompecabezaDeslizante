@@ -45,6 +45,11 @@ public class Interfaz {
 	private final ButtonGroup botonModoJuego = new ButtonGroup();
 	private int modoJuego = 1;
 	private JLabel labelMensajeModoJuego;
+	
+	
+	//----------------------
+	
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -70,6 +75,8 @@ public class Interfaz {
 		crearFrameJuego();
 	}
 
+	
+	//------------------------------------------------------------------------------------
 	private void crearFrameInicio() {
 		frameInicio = new JFrame();
 		frameInicio.setBounds(100, 100, 700, 700);
@@ -77,51 +84,20 @@ public class Interfaz {
 		frameInicio.setLocationRelativeTo(null);
 		frameInicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameInicio.getContentPane().setLayout(null);
-		tituloJuego();
-		opciones();
-		mensajeOpciones();
-		mensajeModoJuego();
+		
+		
+		labelTitulo = VentanaInicio.crearTituloJuego(frameInicio);
+		comboBox = VentanaInicio.crearOpciones(frameInicio);
+		labelMensajeOpciones = VentanaInicio.crearMensajeOpciones(frameInicio);
+		labelMensajeModoJuego = VentanaInicio.crearMensajeModoJuego(frameInicio);
 		seleccionModoDeJuego();
 		botonIniciar();
 		seleccionImagen();
-		imagenesDeEjemplo();
-		ImageIcon imagen = new ImageIcon("src/imagenes/fondo.png");
-		Image imagenEscalada = imagen.getImage().getScaledInstance(frameInicio.getWidth(), frameInicio.getHeight(),
-				Image.SCALE_SMOOTH);
-		ImageIcon imagenRedimensionada = new ImageIcon(imagenEscalada);
-		JLabel etiquetaImagen = new JLabel(imagenRedimensionada);
-		etiquetaImagen.setBounds(0, 0, frameInicio.getWidth(), frameInicio.getHeight());
-		frameInicio.getContentPane().add(etiquetaImagen);
-		frameInicio.getContentPane().setComponentZOrder(etiquetaImagen,
-				frameInicio.getContentPane().getComponentCount() - 1);
+		VentanaInicio.crearImagenesParaMostrar(frameInicio);
+		VentanaInicio.crearImagenFondoFrame(frameInicio);
 	}
 
-	private void tituloJuego() {
-		labelTitulo = new JLabel("Rompecabezas Deslizante");
-		labelTitulo.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		labelTitulo.setHorizontalAlignment(JLabel.CENTER);
-		labelTitulo.setOpaque(false);
-		labelTitulo.setBounds(70, 50, 550, 100);
-		frameInicio.getContentPane().add(labelTitulo);
-	}
-
-	private void opciones() {
-		comboBox = new JComboBox<>();
-		comboBox.setBounds(385, 220, 289, 22);
-		frameInicio.getContentPane().add(comboBox);
-		comboBox.setModel(new DefaultComboBoxModel<>(
-				new String[] { "Seleccione una dificultad", "Fácil (3x3)", "Normal (4x4)", "Difícil (5x5)" }));
-	}
-
-	private void mensajeOpciones() {
-		labelMensajeOpciones = new JLabel("Seleccione una dificultad:");
-		labelMensajeOpciones.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		labelMensajeOpciones.setHorizontalAlignment(JLabel.CENTER);
-		labelMensajeOpciones.setOpaque(false);
-		labelMensajeOpciones.setBounds(17, 220, 250, 22);
-		frameInicio.getContentPane().add(labelMensajeOpciones);
-	}
-
+	
 	private void botonIniciar() {
 		iniciar = new JButton("Iniciar Juego");
 		iniciar.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -181,30 +157,6 @@ public class Interfaz {
 		frameInicio.add(option3);
 	}
 
-	private void imagenesDeEjemplo() {
-		JLabel imagenEjem1 = new JLabel();
-		JLabel imagenEjem2 = new JLabel();
-		JLabel imagenEjem3 = new JLabel();
-		imagenEjem1.setBounds(45, 386, 150, 112);
-		imagenEjem2.setBounds(270, 386, 150, 112);
-		imagenEjem3.setBounds(490, 386, 150, 112);
-		ImageIcon icon1 = new ImageIcon("src//imagenes//imagen1.png");
-		Image img1 = icon1.getImage().getScaledInstance(imagenEjem1.getWidth(), imagenEjem1.getHeight(),
-				Image.SCALE_SMOOTH);
-		imagenEjem1.setIcon(new ImageIcon(img1));
-		ImageIcon icon2 = new ImageIcon("src//imagenes//imagen2.png");
-		Image img2 = icon2.getImage().getScaledInstance(imagenEjem2.getWidth(), imagenEjem2.getHeight(),
-				Image.SCALE_SMOOTH);
-		imagenEjem2.setIcon(new ImageIcon(img2));
-		ImageIcon icon3 = new ImageIcon("src//imagenes//imagen3.png");
-		Image img3 = icon3.getImage().getScaledInstance(imagenEjem3.getWidth(), imagenEjem3.getHeight(),
-				Image.SCALE_SMOOTH);
-		imagenEjem3.setIcon(new ImageIcon(img3));
-		frameInicio.add(imagenEjem1);
-		frameInicio.add(imagenEjem2);
-		frameInicio.add(imagenEjem3);
-	}
-
 	private void seleccionModoDeJuego() {
 		JRadioButton option1 = new JRadioButton("Con números");
 		JRadioButton option2 = new JRadioButton("Con imágenes");
@@ -230,15 +182,9 @@ public class Interfaz {
 		frameInicio.add(option2);
 	}
 
-	private void mensajeModoJuego() {
-		labelMensajeModoJuego = new JLabel("Seleccione un modo de juego:");
-		labelMensajeModoJuego.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		labelMensajeModoJuego.setHorizontalAlignment(JLabel.CENTER);
-		labelMensajeModoJuego.setOpaque(false);
-		labelMensajeModoJuego.setBounds(29, 285, 280, 26);
-		frameInicio.getContentPane().add(labelMensajeModoJuego);
-	}
 
+//------------------------------------------------------------------------------------------------//	
+	
 	private void crearFrameJuego() {
 		frameJuego = new JFrame();
 		int anchoFrame = 500;
@@ -258,6 +204,9 @@ public class Interfaz {
 		}
 	}
 
+	
+	//1 = números
+	//2 = imágenes
 	private void iniciarJuego() {
 		tableroJuego = new RompeCabeza(numeroDificultad);
 		crearContenedorPiezas();
@@ -283,6 +232,25 @@ public class Interfaz {
 		panelContenedorDeLasFichas.setLayout(new GridLayout(tamanioTablero, tamanioTablero, 4, 4));
 		frameJuego.getContentPane().add(panelContenedorDeLasFichas);
 	}
+	
+	private void actualizarTableroConNumeros() {
+		panelContenedorDeLasFichas.removeAll();
+		int tamanioTablero = tableroJuego.totalFilas();
+		for (int fila = 0; fila < tamanioTablero; fila++) {
+			for (int col = 0; col < tamanioTablero; col++) {
+				int valor = tableroJuego.damePieza(fila, col).obtenerValorPieza();
+				boton = valor == 0 ? new JButton("") : new JButton(String.valueOf(valor));
+				boton.setFont(new Font("Arial", Font.PLAIN, 18));
+				boton.setFocusPainted(false);
+				boton.setBorderPainted(true);
+				panelContenedorDeLasFichas.add(boton);
+				agregarAccionBoton(boton, fila, col);
+			}
+		}
+		panelContenedorDeLasFichas.revalidate();
+		panelContenedorDeLasFichas.repaint();
+	}
+	
 
 	private void actualizarTableroConImagenes() {
 		panelContenedorDeLasFichas.removeAll();
@@ -312,23 +280,6 @@ public class Interfaz {
 		panelContenedorDeLasFichas.repaint();
 	}
 
-	private void actualizarTableroConNumeros() {
-		panelContenedorDeLasFichas.removeAll();
-		int tamanioTablero = tableroJuego.totalFilas();
-		for (int fila = 0; fila < tamanioTablero; fila++) {
-			for (int col = 0; col < tamanioTablero; col++) {
-				int valor = tableroJuego.damePieza(fila, col).obtenerValorPieza();
-				boton = valor == 0 ? new JButton("") : new JButton(String.valueOf(valor));
-				boton.setFont(new Font("Arial", Font.PLAIN, 18));
-				boton.setFocusPainted(false);
-				boton.setBorderPainted(true);
-				panelContenedorDeLasFichas.add(boton);
-				agregarAccionBoton(boton, fila, col);
-			}
-		}
-		panelContenedorDeLasFichas.revalidate();
-		panelContenedorDeLasFichas.repaint();
-	}
 
 	private BufferedImage iniciarImagen() {
 		BufferedImage imagenCompleta = null;
@@ -342,7 +293,7 @@ public class Interfaz {
 	}
 
 	private BufferedImage calcularParteDeImagen(int tamanioTablero, BufferedImage imagenEscalada, int partWidth,
-			int partHeight, int valor) {
+		int partHeight, int valor) {
 		int filaOriginal = (valor - 1) / tamanioTablero;
 		int colOriginal = (valor - 1) % tamanioTablero;
 
@@ -363,6 +314,7 @@ public class Interfaz {
 		return imagenEscalada;
 	}
 
+	
 	private void agregarAccionBoton(JButton boton, int fila, int col) {
 		boton.addActionListener(e -> {
 			if (tableroJuego.moverCelda(fila, col)) {
