@@ -109,5 +109,3 @@ public class RompeCabeza {
         return filas * columnas;
     }
 }
-
-
