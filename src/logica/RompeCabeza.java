@@ -1,7 +1,5 @@
 package logica;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -53,7 +51,7 @@ public class RompeCabeza {
 
         if (esAdyacente(fila, col, filaVacio, columnaVacio)) {
         	
-        	//prueba
+        	//¡¡FALTA REFACTORIZAR!!
         	
         	//Si se está moviendo la pieza equivocada
         	if (piezasCorrectasParaGanar.isEmpty() || !(piezas[fila][col].equals(piezasCorrectasParaGanar.getLast()))) { 
@@ -129,20 +127,17 @@ public class RompeCabeza {
     		moverCelda(filaRandom, colRandom);
     	}
     	
-    	//Posicionamos el vacío en la esquina inferior derecha
-    	int[] posVacio = encontrarPosicionVacio();
-        int filaVacio = posVacio[0];
-        int columnaVacio = posVacio[1];
-        
-        this.piezas[filas-1][columnas-1].intercambiarValores(piezas[filaVacio][columnaVacio]);
+    	//Posicionamos el vacío en la esquina inferior derecha (SIRVE PARA PONER EL 0 EN LA ESQUINA INFERIOR)
+//    	int[] posVacio = encontrarPosicionVacio();
+//        int filaVacio = posVacio[0];
+//        int columnaVacio = posVacio[1];
+//        
+//        this.piezas[filas-1][columnas-1].intercambiarValores(piezas[filaVacio][columnaVacio]);
     }
     
     public Pieza sugerirMovimiento() {
     	return piezasCorrectasParaGanar.getLast();
 	}
     
-    private int totalDePiezas() {
-        return filas * columnas;
-    }
 
 }
