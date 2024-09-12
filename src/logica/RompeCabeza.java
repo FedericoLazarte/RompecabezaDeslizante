@@ -16,12 +16,12 @@ public class RompeCabeza {
         this.columnas = tamanio;
         this.piezas = new Pieza[filas][columnas];
         this.movimientos = 0;
-        inicializarFichasDesordenadas();
+        inicializarFichas();
     }
     
     public void reiniciarJuego() {
 	    this.movimientos = 0;
-	    inicializarFichasDesordenadas();
+	    inicializarFichas();
 	}
 
     public Pieza damePieza(int i, int j) {
@@ -86,25 +86,21 @@ public class RompeCabeza {
                (Math.abs(col1 - col2) == 1 && fila1 == fila2);
     }
 
-    private void inicializarFichasDesordenadas() {
-        List<Pieza> listaPiezas = new ArrayList<>();
-        for (int valor = 1; valor <= totalDePiezas() - 1; valor++) {
-            listaPiezas.add(new Pieza(valor));
-        }
-        Collections.shuffle(listaPiezas);
-        int index = 0;
+    private void inicializarFichas() {
+    	int numPieza = 1;
         for (int fila = 0; fila < filas; fila++) {
             for (int col = 0; col < columnas; col++) {
-                if (index < listaPiezas.size()) {
-                    this.piezas[fila][col] = listaPiezas.get(index);
-                    index++;
-                } else {
-                    this.piezas[fila][col] = new Pieza(VACIO);
-                }
+            	this.piezas[fila][col] = new Pieza(numPieza);
+            	numPieza++;
             }
         }
+        this.piezas[filas-1][columnas-1] = new Pieza(VACIO);
     }
 
+    private void mezclarFicha() {
+    	//Falta implementar
+    }
+    
     private int totalDePiezas() {
         return filas * columnas;
     }
