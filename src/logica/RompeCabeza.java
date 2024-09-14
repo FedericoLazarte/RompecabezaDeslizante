@@ -13,7 +13,6 @@ public class RompeCabeza {
     private int movimientos;
     
     
-    //Falta agregar parámetro al constructor
     public RompeCabeza(int tamanio) {
         this.filas = tamanio;
         this.columnas = tamanio;
@@ -25,7 +24,7 @@ public class RompeCabeza {
     
     private void inicializarTablero() {
     	inicializarPiezas();
-        mezclarPiezas(10);
+        mezclarPiezas();
         this.movimientos = 0;
     }
     
@@ -60,16 +59,17 @@ public class RompeCabeza {
         posicionActualVacio[1] = columna;
     }
     
-    //FALTA ARREGLAR QUE EL 0 APARECE EN CUALQUIER LADO
     //Desde un tablero ordenado, se mezclan las piezas moviendolas un número determinado de veces
     //Las piezas no se mueven a la última celda donde estuvieron 
-    private void mezclarPiezas(int vecesQueSeMezcla) { 
+    private void mezclarPiezas() { 
     	Random random = new Random();
     	int filaRandom;
     	int columnaRandom;
     	
-    	//Mientras más veces se mezcle el tablero, más aleatorio va a ser
-    	while(vecesQueSeMezcla>0) {
+    	moverCelda(filas-1, columnas-2);
+    	
+    	//Se mezcla hasta que la celda inferior derecha sea vacía otra vez
+    	while(piezas[filas-1][columnas-1].obtenerValorPieza() != 0) {  
     		filaRandom = random.nextInt(0,this.filas);
     		columnaRandom = random.nextInt(0,this.columnas);
     		
@@ -80,7 +80,6 @@ public class RompeCabeza {
     		if (esAdyacente(filaRandom, columnaRandom, filaVacio, columnaVacio)) {
 	    		if (esPiezaIncorrecta(filaRandom, columnaRandom)) {
 	    			moverCelda(filaRandom, columnaRandom);
-	        		vecesQueSeMezcla--;
 	    		}
     		}
     	}
