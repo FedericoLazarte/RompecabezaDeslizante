@@ -27,5 +27,4 @@ public class Pieza {
 	public String toString() {
 		return ("Ficha: "+this.valor);
 	}
-
 }
