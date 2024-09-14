@@ -13,19 +13,18 @@ public class VentanaVictoria extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JTextField textoVictoria;
-    
 
-    // variables
+    // Variables globales para estilos
     private Color colorFondo = new Color(173, 159, 148);
     private Color colorBoton = new Color(255, 255, 255);
     private Color colorBorde = new Color(189, 182, 94);
-    private Font fuenteTexto = new Font("Arial Black", Font.PLAIN, 20);
+    private Font fuenteTexto = new Font("Arial Black", Font.PLAIN, 22);
 
     public VentanaVictoria(ActionListener reiniciarListener, ActionListener salirListener) {
         setBackground(colorFondo);
         setLayout(null);
 
-        // texto victoria
+        // Crear y configurar el campo de texto
         textoVictoria = new JTextField();
         textoVictoria.setBounds(1, 60, 606, 35);
         textoVictoria.setBorder(null);
@@ -36,7 +35,7 @@ public class VentanaVictoria extends JPanel {
         add(textoVictoria);
         textoVictoria.setColumns(10);
 
-        //botón de reinicio
+        // Crear y configurar el botón de reinicio
         JButton botonReinicio = new JButton("Reiniciar");
         botonReinicio.setBounds(214, 214, 202, 31);
         botonReinicio.setFont(fuenteTexto);
@@ -45,7 +44,7 @@ public class VentanaVictoria extends JPanel {
         botonReinicio.addActionListener(reiniciarListener);
         add(botonReinicio);
 
-        //botón de salir
+        // Crear y configurar el botón de salir
         JButton botonSalir = new JButton("Salir");
         botonSalir.setBounds(214, 356, 202, 31);
         botonSalir.setFont(fuenteTexto);
@@ -55,4 +54,3 @@ public class VentanaVictoria extends JPanel {
         add(botonSalir);
     }
 }
-
