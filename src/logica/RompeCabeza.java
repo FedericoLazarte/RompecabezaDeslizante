@@ -17,7 +17,7 @@ public class RompeCabeza {
         this.filas = tamanio;
         this.columnas = tamanio;
         this.piezas = new Pieza[filas][columnas];
-        this.piezasCorrectasParaGanar = new ArrayList<Pieza>();
+        this.piezasCorrectasParaGanar = new ArrayList<>();
         this.posicionActualVacio = new int[2];
         inicializarTablero();
     }
