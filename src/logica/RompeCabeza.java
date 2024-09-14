@@ -9,52 +9,91 @@ public class RompeCabeza {
     private final int filas;
     private final int columnas;
     private final static int VACIO = 0;
+    private int[] posicionActualVacio;
     private int movimientos;
     
-
+    
+    //Falta agregar parámetro al constructor
     public RompeCabeza(int tamanio) {
         this.filas = tamanio;
         this.columnas = tamanio;
         this.piezas = new Pieza[filas][columnas];
         this.piezasCorrectasParaGanar = new ArrayList<Pieza>();
-        inicializarFichas();
-//        mezclarFichas(200000); //¡NO FUNCIONA DE MOMENTO!
-        this.movimientos = 0; //comienza en 0 tras mezclar el tablero
+        this.posicionActualVacio = new int[2];
+        inicializarTablero();
+    }
+    
+    private void inicializarTablero() {
+    	inicializarPiezas();
+        mezclarPiezas(10);
+        this.movimientos = 0;
     }
     
     public void reiniciarJuego() {
-	    inicializarFichas();
-//	    mezclarFichas(200000); //¡NO FUNCIONA DE MOMENTO!
-	    this.movimientos = 0; //luego de mezclar el tablero nuevamente, se reinician los movimientos
+	    inicializarTablero();
 	}
+    
+    //Crea las piezas y las coloca en orden (partimos de un tablero ordenado)
+    private void inicializarPiezas() {
+    	int numPieza = 1;
+        for (int fila = 0; fila < filas; fila++) {
+            for (int col = 0; col < columnas; col++) {
+            	this.piezas[fila][col] = new Pieza(numPieza);
+            	numPieza++;
+            }
+        }
+        inicializarPiezaVacia();
 
-    public Pieza damePieza(int i, int j) {
-        return this.piezas[i][j];
+        //PRUEBA
+        System.out.println("Posicion del vacio: "+ posicionActualVacio[0]+","+posicionActualVacio[1]); 
     }
-
-    public int totalFilas() {
-        return filas;
+    
+    //Crea la pieza vacía la esquina inferior derecha del tablero e inicializa su posición
+    private void inicializarPiezaVacia() {
+    	this.piezas[filas-1][columnas-1] = new Pieza(VACIO);
+    	actualizarPosicionVacio(filas-1, columnas-1);
+        
     }
-
-    public int totalColumnas() {
-        return columnas;
+    
+    private void actualizarPosicionVacio(int fila,int columna) {
+    	posicionActualVacio[0] = fila;
+        posicionActualVacio[1] = columna;
     }
-
-    public int verCantidadMovimientosRealizados() {
-        return this.movimientos;
+    
+    //FALTA ARREGLAR QUE EL 0 APARECE EN CUALQUIER LADO
+    //Desde un tablero ordenado, se mezclan las piezas moviendolas un número determinado de veces
+    //Las piezas no se mueven a la última celda donde estuvieron 
+    private void mezclarPiezas(int vecesQueSeMezcla) { 
+    	Random random = new Random();
+    	int filaRandom;
+    	int columnaRandom;
+    	
+    	//Mientras más veces se mezcle el tablero, más aleatorio va a ser
+    	while(vecesQueSeMezcla>0) {
+    		filaRandom = random.nextInt(0,this.filas);
+    		columnaRandom = random.nextInt(0,this.columnas);
+    		
+            int filaVacio = posicionActualVacio[0];
+            int columnaVacio = posicionActualVacio[1];
+    		
+            //Al momento de mezclar, solo se mueven las piezas adyacentes e incorrectas para ganar
+    		if (esAdyacente(filaRandom, columnaRandom, filaVacio, columnaVacio)) {
+	    		if (esPiezaIncorrecta(filaRandom, columnaRandom)) {
+	    			moverCelda(filaRandom, columnaRandom);
+	        		vecesQueSeMezcla--;
+	    		}
+    		}
+    	}
     }
-
+    
     public boolean moverCelda(int fila, int col) {
-        int[] posVacio = encontrarPosicionVacio();
-        int filaVacio = posVacio[0];
-        int columnaVacio = posVacio[1];
+    	int filaVacio = posicionActualVacio[0];
+        int columnaVacio = posicionActualVacio[1];
 
         if (esAdyacente(fila, col, filaVacio, columnaVacio)) {
         	
-        	//¡¡FALTA REFACTORIZAR!!
-        	
         	//Si se está moviendo la pieza equivocada
-        	if (piezasCorrectasParaGanar.isEmpty() || !(piezas[fila][col].equals(piezasCorrectasParaGanar.getLast()))) { 
+        	if (esPiezaIncorrecta(fila, col)) { 
         		piezasCorrectasParaGanar.add(piezas[filaVacio][columnaVacio]);
             }
         	//Si se está moviendo la pieza correcta
@@ -63,13 +102,29 @@ public class RompeCabeza {
             }
         	
             piezas[filaVacio][columnaVacio].intercambiarValores(piezas[fila][col]);
+            //Cada vez que se mueve una pieza se actualiza la nueva posición de la pieza vacía
+            actualizarPosicionVacio(fila,col);
             this.movimientos++;
+            
+            //PRUEBA
+            System.out.println("Se movió una ficha");
+            System.out.println("Posicion del vacio: "+ posicionActualVacio[0]+","+posicionActualVacio[1]);
+            System.out.println(sugerirMovimiento());
             
             return true;
         }
         return false;
     }
-
+    
+    //Devuelve si una pieza es incorrecta para ganar, es decir, que si la pieza se mueve desordena el tablero
+    private boolean esPiezaIncorrecta(int fila, int columna) {
+    	if (piezasCorrectasParaGanar.isEmpty())
+    		return true;
+    	if (!piezas[fila][columna].equals(piezasCorrectasParaGanar.getLast()))
+    		return true;
+    	return false;
+    }
+    
     public boolean estaGanado() {
         int contador = 1; 
         for (int fila = 0; fila < filas; fila++) {
@@ -86,58 +141,35 @@ public class RompeCabeza {
         }
         return true;
     }
-
-    private int[] encontrarPosicionVacio() {
-        for (int fila = 0; fila < filas; fila++) {
-            for (int col = 0; col < columnas; col++) {
-                if (this.damePieza(fila, col).obtenerValorPieza() == VACIO) {
-                    return new int[]{fila, col};
-                }
-            }
-        }
-        throw new RuntimeException("No se encontró el 0");
-    }
-
+    
     private boolean esAdyacente(int fila1, int col1, int fila2, int col2) {
         return (Math.abs(fila1 - fila2) == 1 && col1 == col2) ||  
                (Math.abs(col1 - col2) == 1 && fila1 == fila2);
     }
-
-    private void inicializarFichas() {
-    	int numPieza = 1;
-        for (int fila = 0; fila < filas; fila++) {
-            for (int col = 0; col < columnas; col++) {
-            	this.piezas[fila][col] = new Pieza(numPieza);
-            	numPieza++;
-            }
-        }
-        this.piezas[filas-1][columnas-1] = new Pieza(VACIO); //se crea una pieza vacía en la esquina inferior derecha del tablero
-    }
-
-    //¡HAY QUE MEJORAR! MEZCLA MUY POCO Y EL 0 APARECE EN CUALQUIER LADO
-    private void mezclarFichas(int nivelDeEntropia) { 
-    	Random random = new Random();
-    	int filaRandom;
-    	int colRandom;
-    	
-    	//Mientras más grande sea el nivel de entropía, más aleatorio va a ser el tablero
-    	for(int i = 0; i < nivelDeEntropia; i++) {
-    		filaRandom = random.nextInt(1,this.filas);
-    		colRandom = random.nextInt(1,this.columnas);
-    		moverCelda(filaRandom, colRandom);
-    	}
-    	
-    	//Posicionamos el vacío en la esquina inferior derecha (SIRVE PARA PONER EL 0 EN LA ESQUINA INFERIOR)
-//    	int[] posVacio = encontrarPosicionVacio();
-//        int filaVacio = posVacio[0];
-//        int columnaVacio = posVacio[1];
-//        
-//        this.piezas[filas-1][columnas-1].intercambiarValores(piezas[filaVacio][columnaVacio]);
-    }
     
     public Pieza sugerirMovimiento() {
+    	if (piezasCorrectasParaGanar.isEmpty()) {
+    		return null;
+    	}
     	return piezasCorrectasParaGanar.getLast();
 	}
+    
+    public Pieza damePieza(int i, int j) {
+        return this.piezas[i][j];
+    }
+
+    public int totalFilas() {
+        return filas;
+    }
+
+    public int totalColumnas() {
+        return columnas;
+    }
+
+    public int verCantidadMovimientosRealizados() {
+        return this.movimientos;
+    }
+    
     
 
 }
