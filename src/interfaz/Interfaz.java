@@ -346,6 +346,7 @@ public class Interfaz {
         tableroJuego.reiniciarJuego();
         frameJuego.getContentPane().removeAll();
         crearContenedorPiezas();
+        mostrarPantallaInicio();
         ControlAudio.getInstancia().detenerMusica();
         ControlAudio.getInstancia().reproducirMusica("musicaFondo.wav");
         if (modoJuego == 1) {
