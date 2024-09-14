@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
 
+import logica.ControlAudio;
 import logica.RompeCabeza;
 
 public class Interfaz {
@@ -37,7 +38,7 @@ public class Interfaz {
     private JLabel labelMensajeOpciones;
     private JButton iniciar;
     private JComboBox<String> comboBox;
-    private int numeroDificultad = 4;
+    private int numeroDificultad = 4;  
     private String imagenAjugar = "src/imagenes/imagenFondo.png";
     private final ButtonGroup botonImagen = new ButtonGroup();
     private final ButtonGroup botonModoJuego = new ButtonGroup();
@@ -191,6 +192,8 @@ public class Interfaz {
     private void iniciarJuego() {
         tableroJuego = new RompeCabeza(numeroDificultad);
         crearContenedorPiezas();
+        ControlAudio.getInstancia().detenerMusica();
+        ControlAudio.getInstancia().reproducirMusica("musicaFondo.wav");
         if (modoJuego == 1) {
             actualizarTableroConNumeros();
         }
@@ -293,6 +296,7 @@ public class Interfaz {
 
     private void agregarAccionBoton(JButton boton, int fila, int col) {
         boton.addActionListener(e -> {
+        	ControlAudio.getInstancia().reproducirSonido("deslizar.wav"); // sonido al mover
             if (tableroJuego.moverCelda(fila, col)) {
                 actualizarContadorMovimientos();
                 if (modoJuego == 1) {
@@ -342,6 +346,8 @@ public class Interfaz {
         frameJuego.getContentPane().removeAll();
         crearContenedorPiezas();
         mostrarPantallaInicio();
+        ControlAudio.getInstancia().detenerMusica();
+        ControlAudio.getInstancia().reproducirMusica("musicaFondo.wav");
         if (modoJuego == 1) {
             actualizarTableroConNumeros();
         }
@@ -357,4 +363,6 @@ public class Interfaz {
         frameInicio.setVisible(true);
         frameJuego.setVisible(false);
     }
+    
+    
 }
