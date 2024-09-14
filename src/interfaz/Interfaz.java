@@ -38,10 +38,8 @@ public class Interfaz {
     private JLabel labelMensajeOpciones;
     private JButton iniciar;
     private JComboBox<String> comboBox;
-    private int numeroDificultad = 4;
-    
+    private int numeroDificultad = 4;  
     private String imagenAjugar = "src/imagenes/imagenFondo.png";
-
     private final ButtonGroup botonImagen = new ButtonGroup();
     private final ButtonGroup botonModoJuego = new ButtonGroup();
     private int modoJuego = 1;
@@ -195,6 +193,8 @@ public class Interfaz {
     private void iniciarJuego() {
         tableroJuego = new RompeCabeza(numeroDificultad);
         crearContenedorPiezas();
+        ControlAudio.getInstancia().detenerMusica();
+        ControlAudio.getInstancia().reproducirMusica("musicaFondo.wav");
         if (modoJuego == 1) {
             actualizarTableroConNumeros();
         }
@@ -297,6 +297,7 @@ public class Interfaz {
 
     private void agregarAccionBoton(JButton boton, int fila, int col) {
         boton.addActionListener(e -> {
+        	ControlAudio.getInstancia().reproducirSonido("deslizar.wav"); // sonido al mover
             if (tableroJuego.moverCelda(fila, col)) {
                 actualizarContadorMovimientos();
                 if (modoJuego == 1) {

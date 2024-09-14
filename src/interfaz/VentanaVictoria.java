@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
+import logica.ControlAudio;
+
 public class VentanaVictoria extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -21,6 +23,8 @@ public class VentanaVictoria extends JPanel {
     private Font fuenteTexto = new Font("Arial Black", Font.PLAIN, 22);
 
     public VentanaVictoria(ActionListener reiniciarListener, ActionListener salirListener) {
+    	ControlAudio.getInstancia().detenerMusica();
+    	ControlAudio.getInstancia().reproducirSonido("victoria.wav");
         setBackground(colorFondo);
         setLayout(null);
 

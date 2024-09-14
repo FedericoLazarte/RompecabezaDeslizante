@@ -10,16 +10,12 @@ public class RompeCabeza {
     private final int columnas;
     private final static int VACIO = 0;
     private int movimientos;
-	private ControlAudio controlAudio;
 
     public RompeCabeza(int tamanio) {
         this.filas = tamanio;
         this.columnas = tamanio;
         this.piezas = new Pieza[filas][columnas];
         this.movimientos = 0;
-        
-        this.controlAudio = new ControlAudio();
-        this.controlAudio.reproducirMusicaDeFondo("musicaFondo.wav"); // Reproducir música de fondo
         inicializarFichasDesordenadas();
     }
     
@@ -52,7 +48,6 @@ public class RompeCabeza {
         if (esAdyacente(fila, col, filaVacio, columnaVacio)) {
             piezas[filaVacio][columnaVacio].intercambiarValores(piezas[fila][col]);
             this.movimientos++;
-            this.controlAudio.reproducirSonido("deslizar.wav"); // sonido al mover
             return true;          
         }
         return false;
@@ -67,7 +62,7 @@ public class RompeCabeza {
                     return valorActual == VACIO;
                 }
                 if (valorActual != contador) {
-                    return false;
+                    return true;
                 }
                 contador++;
             }

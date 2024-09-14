@@ -8,17 +8,19 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import logica.ControlAudio;
 
 public class VentanaInicio {
-
     public static JLabel crearTituloJuego(JFrame frame) {
+    	ControlAudio.getInstancia().reproducirMusica("musicaMenu.wav");
         JLabel labelTitulo = new JLabel("Rompecabezas Deslizante");
         labelTitulo.setFont(new Font("Tahoma", Font.PLAIN, 42));
         labelTitulo.setHorizontalAlignment(JLabel.CENTER);
         labelTitulo.setOpaque(false);
         labelTitulo.setBounds(70, 50, 550, 100);
         frame.getContentPane().add(labelTitulo);
-        return labelTitulo;
+        return labelTitulo;       
+        
     }
 
     public static JComboBox<String> crearOpciones(JFrame frame) {

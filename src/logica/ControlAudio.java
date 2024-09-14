@@ -7,12 +7,22 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ControlAudio {
+    private static ControlAudio instancia; // Instancia única de la clase
     private Clip musicaFondo;
+
+    // Constructor privado para evitar la creación de múltiples instancias
+    private ControlAudio() { }
+
+    // Método para obtener la instancia única
+    public static ControlAudio getInstancia() {
+        if (instancia == null) {
+            instancia = new ControlAudio();
+        }
+        return instancia;
+    }
 
     public void reproducirSonido(String archivoSonido) {
         try {
-        	
-            // Accede al archivo en el paquete "audio"
             InputStream audioIn = getClass().getResourceAsStream("/audio/" + archivoSonido);
             if (audioIn == null) {
                 throw new IOException("No se pudo encontrar el archivo de sonido: " + archivoSonido);
@@ -26,13 +36,12 @@ public class ControlAudio {
         }
     }
 
-    public void reproducirMusicaDeFondo(String archivoMusica) {
+    public void reproducirMusica(String archivoMusica) {
         try {
             if (musicaFondo != null && musicaFondo.isRunning()) {
-            	musicaFondo.stop();
+                musicaFondo.stop();
             }
             
-            // Accede al archivo en el paquete "audio"
             InputStream audioIn = getClass().getResourceAsStream("/audio/" + archivoMusica);
             if (audioIn == null) {
                 throw new IOException("No se pudo encontrar el archivo de música: " + archivoMusica);
@@ -46,9 +55,9 @@ public class ControlAudio {
         }
     }
 
-    public void detenerMusicaDeFondo() {
+    public void detenerMusica() {
         if (musicaFondo != null && musicaFondo.isRunning()) {
-        	musicaFondo.stop();
+            musicaFondo.stop();
         }
     }
 }
