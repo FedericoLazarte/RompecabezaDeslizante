@@ -67,7 +67,7 @@ public class RompeCabeza {
                     return valorActual == VACIO;
                 }
                 if (valorActual != contador) {
-                    return false;
+                    return true;
                 }
                 contador++;
             }
