@@ -341,6 +341,7 @@ public class Interfaz {
         tableroJuego.reiniciarJuego();
         frameJuego.getContentPane().removeAll();
         crearContenedorPiezas();
+        mostrarPantallaInicio();
         if (modoJuego == 1) {
             actualizarTableroConNumeros();
         }

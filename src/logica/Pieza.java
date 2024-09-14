@@ -22,4 +22,10 @@ public class Pieza {
 		if(valor < 0)
 			throw new IllegalArgumentException("El valor de la pieza no puede ser menor a 0");
 	}
+	
+	@Override
+	public String toString() {
+		return ("Ficha: "+this.valor);
+	}
+	
 }
