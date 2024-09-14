@@ -168,7 +168,4 @@ public class RompeCabeza {
     public int verCantidadMovimientosRealizados() {
         return this.movimientos;
     }
-
-
-
 }

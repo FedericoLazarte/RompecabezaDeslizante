@@ -62,7 +62,6 @@ public class Interfaz {
     private void initialize() {
         crearPantallas();
         mostrarPantallaInicio();
-
     }
 
     private void crearPantallas() {
