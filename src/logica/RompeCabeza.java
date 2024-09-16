@@ -42,9 +42,6 @@ public class RompeCabeza {
             }
         }
         inicializarPiezaVacia();
-
-        //PRUEBA
-        System.out.println("Posicion del vacio: "+ posicionActualVacio[0]+","+posicionActualVacio[1]);
     }
 
     //Crea la pieza vacía la esquina inferior derecha del tablero e inicializa su posición
@@ -105,11 +102,6 @@ public class RompeCabeza {
             actualizarPosicionVacio(fila,col);
             this.movimientos++;
 
-            //PRUEBA
-            System.out.println("Se movió una ficha");
-            System.out.println("Posicion del vacio: "+ posicionActualVacio[0]+","+posicionActualVacio[1]);
-            System.out.println(sugerirMovimiento());
-
             return true;
         }
         return false;
@@ -146,11 +138,11 @@ public class RompeCabeza {
                 (Math.abs(col1 - col2) == 1 && fila1 == fila2);
     }
 
-    public Pieza sugerirMovimiento() {
+    public int sugerirMovimiento() {
         if (piezasCorrectasParaGanar.isEmpty()) {
-            return null;
+            return 0;
         }
-        return piezasCorrectasParaGanar.getLast();
+        return piezasCorrectasParaGanar.getLast().obtenerValorPieza();
     }
 
     public Pieza damePieza(int i, int j) {
