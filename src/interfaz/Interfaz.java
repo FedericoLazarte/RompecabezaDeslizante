@@ -9,13 +9,9 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -27,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
-
 import logica.ControlAudio;
 import logica.RompeCabeza;
 
@@ -57,7 +52,7 @@ public class Interfaz {
             try {
                 new Interfaz();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         });
     }
@@ -279,7 +274,7 @@ public class Interfaz {
         try {
             imagenCompleta = ImageIO.read(new File(imagenAjugar));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return imagenCompleta;
     }
@@ -328,11 +323,9 @@ public class Interfaz {
     	botonAyuda.setHorizontalAlignment(JLabel.CENTER);
     	botonAyuda.setBounds(39, 700, 200, 30);
     	frameJuego.getContentPane().add(botonAyuda, BorderLayout.SOUTH);
-    	
     	botonAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int piezaCorrecta = tableroJuego.sugerirMovimiento();
-				//Se remarca con verde la pieza correcta para ganar el juego
 				botonesDelTablero[piezaCorrecta].setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.GREEN, Color.GREEN));;
 			}
 		});
@@ -388,5 +381,4 @@ public class Interfaz {
         frameInicio.setVisible(true);
         frameJuego.setVisible(false);
     }
-    
 }

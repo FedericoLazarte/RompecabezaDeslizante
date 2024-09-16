@@ -54,7 +54,6 @@ public class VentanaInicio {
         frame.add(option2);
     }
 
-
     public static JLabel crearMensajeModoJuego(JFrame frame) {
         JLabel labelMensajeModoJuego = new JLabel("Seleccione un modo de juego:");
         labelMensajeModoJuego.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -64,7 +63,6 @@ public class VentanaInicio {
         frame.getContentPane().add(labelMensajeModoJuego);
         return labelMensajeModoJuego;
     }
-
 
     public static void crearImagenesParaMostrar(JFrame frame) {
         JLabel imagenEjem1 = new JLabel();
