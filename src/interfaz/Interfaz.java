@@ -381,8 +381,6 @@ public class Interfaz {
         if (modoJuego == 2) {
             actualizarTableroConImagenes();
         }
-        labelMovimientosTexto.setText("Movimientos: 0");
-        frameJuego.getContentPane().add(labelMovimientosTexto, BorderLayout.NORTH);
         frameJuego.repaint();
     }
 
